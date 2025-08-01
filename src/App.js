@@ -1,10 +1,10 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Header from "./layout/header";
 import TaskForm from "./components/form";
 import FilterTabs from "./components/tabs";
 import TaskList from "./components/list";
 import EmptyState from "./components/stats";
-import { addTaskAPI } from "./api/axios";
+import { addTaskAPI, listTasks, deleteTask } from "./api/axios";
 import "./App.scss";
 
 function App() {
@@ -19,17 +19,36 @@ function App() {
 		const newTask = {
 			title: input,
 			priority: priority,
-			status: "Pending",
 		};
 		console.log("Sending task:", newTask);
 
 		try {
 			const response = await addTaskAPI(newTask);
-			setTasks([...tasks, response.data]);
+			fetchTasks();
+			// setTasks([...tasks, response.data]);
 			setInput("");
-			setPriority("High");
+			setPriority("high_priority");
 		} catch (error) {
 			console.error("Failed to add task:", error);
+		}
+	};
+
+	const DeleteTask = async (id) => {
+		try {
+		  await deleteTask(id);
+		  fetchTasks(); // Refresh task list
+		} catch (error) {
+		  console.error("Failed to delete task:", error);
+		}
+	  };
+	  
+	const fetchTasks = async () => {
+		try {
+			const taskData = await listTasks();
+			setTasks(taskData);
+			console.log(taskData);
+		} catch (error) {
+			console.error("Failed to fetch tasks:", error);
 		}
 	};
 
@@ -53,6 +72,11 @@ function App() {
 		(task) => task.status === "Completed"
 	).length;
 
+	useEffect(() => {
+		fetchTasks();
+	  }, []);
+	  
+
 	return (
 		<div className="app-container">
 			<Header />
@@ -68,7 +92,7 @@ function App() {
 			</div>
 
 			{filteredTasks.length > 0 ? (
-				<TaskList tasks={filteredTasks} toggleStatus={toggleStatus} />
+				<TaskList tasks={filteredTasks} toggleStatus={toggleStatus}  deleteTask={DeleteTask}/>
 			) : (
 				<EmptyState />
 			)}
