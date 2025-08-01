@@ -9,7 +9,7 @@ import "./App.scss";
 
 function App() {
 	const [input, setInput] = useState("");
-	const [priority, setPriority] = useState("High");
+	const [priority, setPriority] = useState("high_priority");
 	const [filter, setFilter] = useState("All");
 	const [tasks, setTasks] = useState([]);
 

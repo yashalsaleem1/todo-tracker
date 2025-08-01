@@ -10,9 +10,9 @@ const TaskForm = ({ input, setInput, priority, setPriority, addTask }) => (
       placeholder="What needs to be done?"
     />
     <select value={priority} onChange={(e) => setPriority(e.target.value)}>
-      <option value="High">High Priority</option>
-      <option value="Medium">Medium Priority</option>
-      <option value="Low">Low Priority</option>
+      <option value="high_priority">High Priority</option>
+      <option value="medium_priority">Medium Priority</option>
+      <option value="low_priority">Low Priority</option>
     </select>
     <button onClick={addTask}>Add Task</button>
   </div>
