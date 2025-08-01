@@ -98,11 +98,17 @@ body {
 }
 
 // Task Stats
-.task-stats {
+.task-controls {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
   margin-bottom: 1rem;
+}
+
+// Optional: keeps task-stats aligned right
+.task-stats {
   color: #6b7280;
   display: flex;
-  justify-content: center;
   gap: 1rem;
   font-size: 0.95rem;
 
@@ -112,6 +118,7 @@ body {
     border-radius: 5px;
   }
 }
+
 
 // Task List
 .task-list {
